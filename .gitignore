@@ -1,0 +1,30 @@
+# Node
+node_modules/
+npm-debug.log*
+
+# Laravel
+Project/rendez-vous-backend/.env
+Project/rendez-vous-backend/.env.production
+Project/rendez-vous-backend/vendor/
+Project/rendez-vous-backend/public/build/
+Project/rendez-vous-backend/public/hot
+Project/rendez-vous-backend/public/storage
+Project/rendez-vous-backend/storage/*.key
+Project/rendez-vous-backend/storage/pail/
+Project/rendez-vous-backend/.phpunit.result.cache
+Project/rendez-vous-backend/.phpunit.cache/
+
+# React
+Project/rendez-vous-frontend/node_modules/
+Project/rendez-vous-frontend/dist/
+Project/rendez-vous-frontend/.env.local
+Project/rendez-vous-frontend/.env.production
+
+# OS
+.DS_Store
+Thumbs.db
+*.log
+
+# IDE
+.vscode/
+.idea/

@@ -1,0 +1,169 @@
+steps im following to make the project 
+1- cahier de charge 
+2- UML / diagramme de cas d'utilisation / diagramme de classe 
+3- downloading node.js /composer/ xampp 
+4- creating tables by using migration in laravel 
+5- then i have a problem in models, migration and controllers so i had to do some reachers to understand them more 
+6- i made models and started on the authentification controllers, 
+7- i created all the controllers and their routes 
+8- i have tested the whole backend with postman 
+9- i started on react
+10- i made the register and the login page
+11- started on patient dashboard 
+12- finished the dashboard secretaire and medecin dashboard 
+13- i have almost finished the app but i want to add some features 
+14- i used a library called full canlender so i can create the calender for the doctor 
+
+
+
+
+
+
+new things that i have learnt 
+
+// to create a laravel project 
+composer create-project laravel/laravel rendez-vous-backend 
+
+// to open the laravel serve 
+php artisan serve 
+
+//to create a migration file 
+php artisan make::migration create_patient_table 
+
+la migration est un fichier php qui sert a structurer notre base de donnée, on l'utilise pour créer des table automatiquement 
+
+example de code pour une création de table 
+
+public function up(): void 	tourner 					// la fonction UP permet la création de la table, Void pour dire que la fonction ne vas rien retourner
+{										// function($blueprint table) pour créer des colonnes 
+    Schema::create('patients', function (Blueprint $table) {			// quand on termine par remplire tout les migration on fais php artisan migrate pour créer les table automatiquement
+										// php artisan migrate sert a lire tout les fichier de migration et les push a la base de donnée
+        $table->id();								// php artisan migrate:fresh pour les supprimées et les recrées 		
+        $table->foreignId('user_id')->constrained()->onDelete('cascade');
+        $table->string('telephone');
+        $table->timestamps();
+    });
+}
+//token
+       $token = $user->createToken('auth_token')->plainTextToken;
+
+//you don't verify the email and password in react cuz u should not bring the password to the front end for security purposes 
+so i had to use the authController 
+
+by using attempt u can verificate the users informations 
+for react to understand that verification is correct or incorrect u send an error like 401  
+and once axios get the errors it return the catch message
+
+// laravel authController 
+
+if(!auth::attempt([ 'email'=> $request->email , 'password' => $request->password])){
+	return response()->json(['message' => "l'email ou le mot de passe est incorrecte ", 401])
+}
+
+//react apres avoir recus l'erreur 401 
+
+
+      api.post('/login', formData)
+            .then((res) => {
+                dispatch(setCredentials({
+                    user: res.data.user,
+                    token: res.data.token,
+                }))
+                setFormData({ email: '', password: '' })
+                setErrors([])
+                navigate('/dashboard')
+            })
+//sa applique cette partie du code 
+            .catch(() => newErrors.push('Email ou mot de passe incorrect'))
+            
+        if (newErrors.length > 0) {
+            setErrors(newErrors)
+            return
+        }
+// Login / Register patient
+
+i used local states ( useState ) 
+verification des champs/ email / password 
+api.post vers la data base ou il y'a la verfication de l'identité avec attempt 
+remplire le store redux
+affichage des erreurs 
+
+
+ 
+// dashboard Patient 
+
+fonction pour annuler le rendez vous{
+	+api pour annuler le rendez vous avec son id 
+	+ refraichir les créneau 
+	+ réfraichir la liste des rendez vous 	
+}
+fonction pour prendre le rendez vous{
+	+voir si le creneau et le service est sélectionné 
+	+api.post pour créer le rendez vous 
+	+api.get pour réfraichir la liste des rendez vous et les créneau
+} 
+fonction pour afficher les rendez vous d'un patient {
+	
+	+api.get pour recevoir les rendez vous d'un patient 
+	+ajouter un boutton anuller devant chaque rendez vous pour l'annuler et le rendre le creneau disponible 
+	+axios pour refraichir les créneaux 
+
+}
+fonction pour le logout { 
+	+j'envoie un dispatch vers le store avec l'action logout 
+	+api vers laravel pour détruire le token 
+	+redirection vers le login 
+}
+
+// calender for the doctor 
+Think of the calendar as a window. You decide what the user sees using 
+the initialView and headerToolbar settings.
+
+want a month u can use the ? Use dayGridMonth 
+
+Want a Week with hours? Use timeGridWeek.
+
+The Buttons: You can choose where to put the "Next" and "Previous" buttons : 
+
+<FullCalendar
+  initialView="dayGridMonth" 
+  local = "fr"
+  headerToolbar={{
+    left: 'prev,next',   // Buttons on the left
+    center: 'title',     // Month name in the middle
+    right: 'timeGridWeek,dayGridMonth' // Switch buttons on the right
+  }}
+/>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
