@@ -1,0 +1,11 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# Presentation files
+*.pptx
+*.ppt
+
+# Python
+__pycache__/
+*.pyc
