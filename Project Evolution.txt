@@ -1,169 +1,367 @@
-steps im following to make the project 
-1- cahier de charge 
-2- UML / diagramme de cas d'utilisation / diagramme de classe 
-3- downloading node.js /composer/ xampp 
-4- creating tables by using migration in laravel 
-5- then i have a problem in models, migration and controllers so i had to do some reachers to understand them more 
-6- i made models and started on the authentification controllers, 
-7- i created all the controllers and their routes 
-8- i have tested the whole backend with postman 
-9- i started on react
-10- i made the register and the login page
-11- started on patient dashboard 
-12- finished the dashboard secretaire and medecin dashboard 
-13- i have almost finished the app but i want to add some features 
-14- i used a library called full canlender so i can create the calender for the doctor 
+╔══════════════════════════════════════════════════════════════════════╗
+║              JOURNAL D'ÉVOLUTION DU PROJET                          ║
+║              RendezVousApp — Milad DLOU                             ║
+║              ISTA HAY SALAM — Développement Digital 2ème année      ║
+╚══════════════════════════════════════════════════════════════════════╝
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  ÉTAPES DE RÉALISATION DU PROJET
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ÉTAPE 1 — Analyse et cahier des charges
+  ────────────────────────────────────────
+  → Définition des besoins fonctionnels et non fonctionnels
+  → Identification des acteurs : Patient, Médecin, Secrétaire
+  → Description des fonctionnalités attendues par rôle
+
+  ÉTAPE 2 — Conception UML
+  ─────────────────────────
+  → Diagramme de cas d'utilisation (Use Case)
+  → Diagramme de classes
+  → Conception du schéma de la base de données (7 tables)
+
+  ÉTAPE 3 — Installation de l'environnement de développement
+  ────────────────────────────────────────────────────────────
+  → Node.js         (environnement JavaScript / npm)
+  → Composer        (gestionnaire de dépendances PHP)
+  → XAMPP           (serveur Apache + MySQL local)
+  → VS Code         (éditeur de code)
+
+  ÉTAPE 4 — Création des migrations Laravel
+  ──────────────────────────────────────────
+  → Création de toutes les tables via les fichiers de migration
+  → Tables : users, patients, medecins, secretaires,
+             services, creneaux, rendez_vous
+
+  ÉTAPE 5 — Compréhension des modèles, migrations et contrôleurs
+  ───────────────────────────────────────────────────────────────
+  → Blocage initial sur le fonctionnement de l'ORM Eloquent
+  → Recherches approfondies sur les relations entre modèles
+    (hasOne, hasMany, belongsTo, foreignId)
+  → Compréhension du cycle complet : Migration → Modèle → Contrôleur → Route
+
+  ÉTAPE 6 — Développement des modèles et de l'authentification
+  ─────────────────────────────────────────────────────────────
+  → Création de tous les modèles Eloquent avec leurs relations
+  → Implémentation de l'AuthController :
+      - register() → Inscription + création token
+      - login()    → Connexion avec Auth::attempt() + token
+      - logout()   → Destruction du token courant
+
+  ÉTAPE 7 — Développement de tous les contrôleurs API
+  ─────────────────────────────────────────────────────
+  → RendezVousController  (prendre / annuler / mes rendez-vous)
+  → MedecinController     (profil / créer)
+  → SecretaireController  (créer / profil)
+  → PatientController     (liste / profil)
+  → CreneauController     (créer / lister / supprimer)
+  → ServiceController     (créer / lister / supprimer)
+  → emailController       (envoi de notifications)
+  → Définition de toutes les routes dans routes/api.php
+
+  ÉTAPE 8 — Tests de l'API avec Postman
+  ──────────────────────────────────────
+  → Test de chaque endpoint (GET, POST, DELETE)
+  → Vérification de l'authentification par token Bearer
+  → Validation des réponses JSON et des codes HTTP (200, 401, 400, 404)
+
+  ÉTAPE 9 — Démarrage du frontend React
+  ───────────────────────────────────────
+  → Création du projet avec Vite : npm create vite@latest
+  → Installation des dépendances : React Router, Redux Toolkit, Axios
+  → Configuration du store Redux (AuthSlice)
+  → Mise en place du fichier api.js (instance Axios avec token automatique)
+
+  ÉTAPE 10 — Pages d'inscription et de connexion
+  ────────────────────────────────────────────────
+  → Formulaire Register : états locaux, validation, appel API, redirect
+  → Formulaire Login    : Auth::attempt côté Laravel, gestion erreur 401,
+                          dispatch Redux, redirection par rôle
+
+  ÉTAPE 11 — Dashboard Patient
+  ─────────────────────────────
+  → Composant PrendreRDV   : sélection service + créneau, appel API POST
+  → Composant MesRDV       : liste des RDV, bouton annuler, rafraîchissement
+  → Composant Calendrier   : vue FullCalendar des créneaux disponibles
+  → Composant Profil       : affichage et modification des données patient
+  → Gestion du logout      : dispatch Redux + suppression token via API
+
+  ÉTAPE 12 — Dashboards Médecin et Secrétaire
+  ─────────────────────────────────────────────
+  → Dashboard Médecin    :
+      - GestionCreneau    → CRUD des créneaux horaires
+      - GererService      → CRUD des services médicaux
+      - CreerSecretaire   → Création d'un compte secrétaire
+      - ListeRDV          → Consultation des rendez-vous
+      - ProfilMedecin     → Gestion du profil
+  → Dashboard Secrétaire :
+      - ListePatient      → Annuaire des patients inscrits
+      - ListeRDV          → Vue des rendez-vous du jour / globaux
+      - ProfilSecretaire  → Gestion du profil
+
+  ÉTAPE 13 — Finalisation et routes protégées
+  ─────────────────────────────────────────────
+  → Création du composant ProtectedRoutes (garde-route par rôle)
+  → Toutes les routes vérifiées et testées end-to-end
+  → Correction du bug d'annulation : le créneau n'était pas remis disponible
+    → Solution : ajouter $creneau->update(['disponible' => true]) dans annuler()
+
+  ÉTAPE 14 — Intégration de FullCalendar
+  ───────────────────────────────────────
+  → Installation : npm install @fullcalendar/react @fullcalendar/daygrid
+                              @fullcalendar/timegrid
+  → Configuration de la vue mensuelle et hebdomadaire
+  → Affichage des créneaux disponibles du médecin sur le calendrier
 
 
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  NOUVELLES CHOSES APPRISES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+┌──────────────────────────────────────────────────────────────────┐
+│  SECTION 1 — LARAVEL / PHP                                       │
+└──────────────────────────────────────────────────────────────────┘
+
+  [1.1] CRÉER UN PROJET LARAVEL
+  ──────────────────────────────
+  composer create-project laravel/laravel rendez-vous-backend
+
+  → Génère la structure MVC complète de Laravel automatiquement
+  → Dossiers importants :
+      app/Http/Controllers/  → les contrôleurs
+      app/Models/            → les modèles Eloquent
+      database/migrations/   → les fichiers de migration
+      routes/api.php         → les routes de l'API
 
 
+  [1.2] LANCER LE SERVEUR DE DÉVELOPPEMENT
+  ──────────────────────────────────────────
+  php artisan serve
+
+  → Démarre le serveur local sur http://127.0.0.1:8000
+  → À laisser actif pendant tout le développement
 
 
-new things that i have learnt 
+  [1.3] LES MIGRATIONS — C'EST QUOI ?
+  ─────────────────────────────────────
+  Une migration est un fichier PHP qui décrit la structure d'une table
+  de la base de données. Elle permet de créer les tables automatiquement
+  sans écrire du SQL à la main.
 
-// to create a laravel project 
-composer create-project laravel/laravel rendez-vous-backend 
+  Créer un fichier de migration :
+  ─────────────────────────────────
+  php artisan make:migration create_patients_table
 
-// to open the laravel serve 
-php artisan serve 
+  Exemple de migration pour la table patients :
+  ───────────────────────────────────────────────
+  public function up(): void
+  {
+      Schema::create('patients', function (Blueprint $table) {
+          $table->id();                                          // Clé primaire auto-incrémentée
+          $table->foreignId('user_id')->constrained()           // Clé étrangère → table users
+                                      ->onDelete('cascade');    // Suppression en cascade
+          $table->string('telephone');                          // Colonne texte
+          $table->timestamps();                                 // created_at + updated_at
+      });
+  }
 
-//to create a migration file 
-php artisan make::migration create_patient_table 
-
-la migration est un fichier php qui sert a structurer notre base de donnée, on l'utilise pour créer des table automatiquement 
-
-example de code pour une création de table 
-
-public function up(): void 	tourner 					// la fonction UP permet la création de la table, Void pour dire que la fonction ne vas rien retourner
-{										// function($blueprint table) pour créer des colonnes 
-    Schema::create('patients', function (Blueprint $table) {			// quand on termine par remplire tout les migration on fais php artisan migrate pour créer les table automatiquement
-										// php artisan migrate sert a lire tout les fichier de migration et les push a la base de donnée
-        $table->id();								// php artisan migrate:fresh pour les supprimées et les recrées 		
-        $table->foreignId('user_id')->constrained()->onDelete('cascade');
-        $table->string('telephone');
-        $table->timestamps();
-    });
-}
-//token
-       $token = $user->createToken('auth_token')->plainTextToken;
-
-//you don't verify the email and password in react cuz u should not bring the password to the front end for security purposes 
-so i had to use the authController 
-
-by using attempt u can verificate the users informations 
-for react to understand that verification is correct or incorrect u send an error like 401  
-and once axios get the errors it return the catch message
-
-// laravel authController 
-
-if(!auth::attempt([ 'email'=> $request->email , 'password' => $request->password])){
-	return response()->json(['message' => "l'email ou le mot de passe est incorrecte ", 401])
-}
-
-//react apres avoir recus l'erreur 401 
+  Commandes utiles :
+  ───────────────────
+  php artisan migrate              → Exécute toutes les migrations (crée les tables)
+  php artisan migrate:fresh        → Supprime toutes les tables et les recrée
+  php artisan migrate:rollback     → Annule la dernière migration
 
 
-      api.post('/login', formData)
-            .then((res) => {
-                dispatch(setCredentials({
-                    user: res.data.user,
-                    token: res.data.token,
-                }))
-                setFormData({ email: '', password: '' })
-                setErrors([])
-                navigate('/dashboard')
-            })
-//sa applique cette partie du code 
-            .catch(() => newErrors.push('Email ou mot de passe incorrect'))
-            
-        if (newErrors.length > 0) {
-            setErrors(newErrors)
-            return
-        }
-// Login / Register patient
+  [1.4] AUTHENTIFICATION AVEC LARAVEL SANCTUM
+  ─────────────────────────────────────────────
+  Sanctum génère un TOKEN unique par utilisateur à chaque connexion.
+  Ce token est ensuite envoyé par React dans chaque requête pour
+  prouver que l'utilisateur est bien authentifié.
 
-i used local states ( useState ) 
-verification des champs/ email / password 
-api.post vers la data base ou il y'a la verfication de l'identité avec attempt 
-remplire le store redux
-affichage des erreurs 
+  Générer un token :
+  ───────────────────
+  $token = $user->createToken('auth_token')->plainTextToken;
 
+  Pourquoi ne pas vérifier le mot de passe dans React ?
+  ──────────────────────────────────────────────────────
+  On ne compare JAMAIS le mot de passe côté frontend, car cela
+  obligerait à envoyer le mot de passe haché au client → faille de sécurité.
+  La vérification se fait exclusivement dans le contrôleur Laravel
+  avec Auth::attempt(), qui compare le mot de passe reçu avec le hash en base.
 
- 
-// dashboard Patient 
-
-fonction pour annuler le rendez vous{
-	+api pour annuler le rendez vous avec son id 
-	+ refraichir les créneau 
-	+ réfraichir la liste des rendez vous 	
-}
-fonction pour prendre le rendez vous{
-	+voir si le creneau et le service est sélectionné 
-	+api.post pour créer le rendez vous 
-	+api.get pour réfraichir la liste des rendez vous et les créneau
-} 
-fonction pour afficher les rendez vous d'un patient {
-	
-	+api.get pour recevoir les rendez vous d'un patient 
-	+ajouter un boutton anuller devant chaque rendez vous pour l'annuler et le rendre le creneau disponible 
-	+axios pour refraichir les créneaux 
-
-}
-fonction pour le logout { 
-	+j'envoie un dispatch vers le store avec l'action logout 
-	+api vers laravel pour détruire le token 
-	+redirection vers le login 
-}
-
-// calender for the doctor 
-Think of the calendar as a window. You decide what the user sees using 
-the initialView and headerToolbar settings.
-
-want a month u can use the ? Use dayGridMonth 
-
-Want a Week with hours? Use timeGridWeek.
-
-The Buttons: You can choose where to put the "Next" and "Previous" buttons : 
-
-<FullCalendar
-  initialView="dayGridMonth" 
-  local = "fr"
-  headerToolbar={{
-    left: 'prev,next',   // Buttons on the left
-    center: 'title',     // Month name in the middle
-    right: 'timeGridWeek,dayGridMonth' // Switch buttons on the right
-  }}
-/>
+  Contrôleur Auth — login() :
+  ─────────────────────────────
+  if (!Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
+      return response()->json(['message' => "Email ou mot de passe incorrect"], 401);
+      // 401 = Non autorisé → Axios dans React recevra ce code dans le catch()
+  }
+  $user  = Auth::user();
+  $token = $user->createToken('auth_token')->plainTextToken;
+  return response()->json(['user' => $user, 'token' => $token]);
 
 
+┌──────────────────────────────────────────────────────────────────┐
+│  SECTION 2 — REACT / REDUX                                       │
+└──────────────────────────────────────────────────────────────────┘
+
+  [2.1] LOGIN ET REGISTER — LOGIQUE COMPLÈTE
+  ───────────────────────────────────────────
+  Étapes dans les composants Login.jsx / Register.jsx :
+    1. Utiliser useState pour gérer les champs du formulaire
+    2. Valider les champs (email valide, mot de passe non vide...)
+    3. Envoyer les données avec api.post() vers Laravel
+    4. En cas de succès → dispatch(setCredentials()) pour remplir Redux
+    5. Rediriger vers le dashboard avec navigate()
+    6. En cas d'erreur 401 → afficher le message d'erreur à l'utilisateur
+
+  Exemple — Traitement de la réponse login dans React :
+  ──────────────────────────────────────────────────────
+  api.post('/login', formData)
+      .then((res) => {
+          dispatch(setCredentials({
+              user:  res.data.user,
+              token: res.data.token,
+          }))
+          setFormData({ email: '', password: '' })
+          setErrors([])
+          navigate('/dashboard')   // Redirection après connexion réussie
+      })
+      .catch(() => {
+          newErrors.push('Email ou mot de passe incorrect')
+          // Laravel a renvoyé 401 → Axios déclenche le catch()
+      })
 
 
+  [2.2] DASHBOARD PATIENT — FONCTIONS PRINCIPALES
+  ─────────────────────────────────────────────────
+
+  Prendre un rendez-vous :
+  ─────────────────────────
+    → Vérifier que l'utilisateur a sélectionné un service ET un créneau
+    → api.post('/rendezvous/prendre', { service_id, creneau_id })
+    → Après succès : rafraîchir la liste des RDV + la liste des créneaux
+
+  Annuler un rendez-vous :
+  ─────────────────────────
+    → api.delete('/rendezvous/' + id)
+    → Laravel supprime le RDV ET remet le créneau disponible (disponible = true)
+    → Après succès : rafraîchir la liste des RDV + la liste des créneaux
+
+  Afficher mes rendez-vous :
+  ───────────────────────────
+    → api.get('/rendezvous/mes') → reçoit les RDV du patient connecté
+    → Afficher chaque RDV avec : service, date, heure, statut
+    → Ajouter un bouton "Annuler" devant chaque RDV
+
+  Déconnexion (Logout) :
+  ───────────────────────
+    → dispatch(logout())            → vide le store Redux (efface token + user)
+    → api.post('/logout')           → Laravel détruit le token en base
+    → navigate('/login')            → redirige vers la page de connexion
 
 
+┌──────────────────────────────────────────────────────────────────┐
+│  SECTION 3 — FULLCALENDAR                                        │
+└──────────────────────────────────────────────────────────────────┘
+
+  [3.1] CONCEPT
+  ──────────────
+  FullCalendar est une bibliothèque React qui affiche un calendrier
+  interactif. On lui passe une liste d'événements (créneaux) et il
+  les affiche sur la grille de façon visuelle.
+
+  Pense au calendrier comme une fenêtre :
+    → Tu choisis CE QUE l'utilisateur voit (mois, semaine, jour)
+      via la prop initialView
+    → Tu choisis LES BOUTONS disponibles via headerToolbar
+
+  Vues disponibles :
+  ───────────────────
+    dayGridMonth   → Vue mensuelle classique (grille de mois)
+    timeGridWeek   → Vue hebdomadaire avec les heures (emploi du temps)
+    timeGridDay    → Vue journalière avec les heures
+
+  [3.2] EXEMPLE D'UTILISATION
+  ─────────────────────────────
+  <FullCalendar
+    initialView="dayGridMonth"
+    locale="fr"
+    headerToolbar={{
+      left:   'prev,next today',           // Boutons navigation (gauche)
+      center: 'title',                     // Titre du mois/semaine (centre)
+      right:  'dayGridMonth,timeGridWeek'  // Boutons de changement de vue (droite)
+    }}
+    events={creneaux.map(c => ({           // Convertir les créneaux en événements
+      title: c.disponible ? 'Disponible' : 'Réservé',
+      date:  c.date,
+      color: c.disponible ? '#40916C' : '#E74C3C'
+    }))}
+  />
+
+  Installation :
+  ───────────────
+  npm install @fullcalendar/react @fullcalendar/daygrid @fullcalendar/timegrid
 
 
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  BUGS RENCONTRÉS ET SOLUTIONS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  BUG 1 — Problème CORS
+  ──────────────────────
+  Symptôme : Le navigateur bloque les requêtes de React (port 5173)
+             vers Laravel (port 8000)
+  Cause     : Le navigateur interdit les appels cross-origin par défaut
+  Solution  : Configurer config/cors.php dans Laravel pour autoriser
+              l'origine http://localhost:5173
+
+  BUG 2 — Créneau non remis disponible après annulation
+  ───────────────────────────────────────────────────────
+  Symptôme : Après annulation d'un RDV, le créneau restait "indisponible"
+  Cause     : La méthode annuler() supprimait le RDV mais oubliait de
+              remettre le créneau à disponible = true
+  Solution  : Ajouter après la suppression du RDV :
+              $creneau->update(['disponible' => true]);
+
+  BUG 3 — Store Redux réinitialisé au rechargement de page
+  ──────────────────────────────────────────────────────────
+  Symptôme : L'utilisateur était déconnecté à chaque rechargement
+  Cause     : Redux est en mémoire — il se réinitialise au refresh
+  Solution  : Synchroniser le store avec localStorage :
+              sauvegarder le token au login, le relire au démarrage
+
+  BUG 4 — Routes accessibles sans authentification
+  ──────────────────────────────────────────────────
+  Symptôme : Un patient pouvait accéder à /dashboard/medecin en tapant
+             l'URL directement dans le navigateur
+  Cause     : Pas de protection des routes côté frontend
+  Solution  : Créer le composant ProtectedRoutes qui vérifie le rôle
+              dans le store Redux avant de rendre la page
 
 
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  COMMANDES DE RÉFÉRENCE RAPIDE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  ── LARAVEL (Backend) ───────────────────────────────────────────────
+  composer create-project laravel/laravel <nom>    → Créer un projet
+  php artisan serve                                → Lancer le serveur
+  php artisan make:migration create_<nom>_table    → Nouvelle migration
+  php artisan make:model <Nom>                     → Nouveau modèle
+  php artisan make:controller <Nom>Controller      → Nouveau contrôleur
+  php artisan migrate                              → Appliquer les migrations
+  php artisan migrate:fresh                        → Tout remettre à zéro
+  php artisan migrate:rollback                     → Annuler la dernière migration
 
+  ── REACT (Frontend) ────────────────────────────────────────────────
+  npm create vite@latest <nom> -- --template react → Créer un projet React
+  npm install                                      → Installer les dépendances
+  npm run dev                                      → Lancer le serveur de dev
+  npm install react-router-dom                     → Router
+  npm install @reduxjs/toolkit react-redux         → Redux
+  npm install axios                                → Requêtes HTTP
+  npm install @fullcalendar/react \
+              @fullcalendar/daygrid \
+              @fullcalendar/timegrid               → FullCalendar
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
